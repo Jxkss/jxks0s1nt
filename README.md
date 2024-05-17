@@ -39,6 +39,10 @@ pip install -r requirements.txt
 
 ## Usage
 
+### Download the latest Release
+
+---
+
 ### Run the Main Script
 
 ```bash

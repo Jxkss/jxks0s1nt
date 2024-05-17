@@ -10,6 +10,11 @@ jxks0s1nt is a powerful network reconnaissance tool designed to perform extensiv
 - **Port Scan**: Scan the first 10,000 ports of an IP address to identify open ports.
 - **VPN/Proxy Check**: Determine if an IP address is associated with a VPN or proxy service.
 
+## Example
+<p align="center">
+  <img src="https://file.io/mTzR7WOfuUsU" width="350" title="jxks0s1nt">
+</p>
+
 ## Installation
 
 ### Prerequisites
@@ -58,8 +63,8 @@ For any inquiries, contact `jxksdev` on Discord.
 
 ## Acknowledgements
 
-- [ip-api.com](https://ip-api.com) for the IP information API.
-- IPQualityScore for the VPN/proxy detection API.
+- [ip-api](https://ip-api.com/) for the IP information API.
+- [IPQualityScore](https://ipqualityscore.com/) for the VPN/proxy detection API.
 
 ---
 

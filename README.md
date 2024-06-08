@@ -1,6 +1,6 @@
 # jxks0s1nt
 <p align="center">
-  <img src="https://file.io/O6L3FBwqHasQ" width="350" title="jxks0s1nt">
+  <img src="https://github.com/Jxkss/jxks0s1nt/blob/main/Assets/jxks0s1nt.png" width="350" title="jxks0s1nt">
 </p>
 jxks0s1nt is a powerful network reconnaissance tool designed to perform extensive IP address analysis, port scanning, and VPN/proxy detection.
 
@@ -12,7 +12,7 @@ jxks0s1nt is a powerful network reconnaissance tool designed to perform extensiv
 
 ## Example
 <p align="center">
-  <img src="https://file.io/mTzR7WOfuUsU" width="350" title="jxks0s1nt">
+  <img src="https://github.com/Jxkss/jxks0s1nt/blob/main/Assets/thumbnail.png" width="350" title="jxks0s1nt">
 </p>
 
 ## Installation

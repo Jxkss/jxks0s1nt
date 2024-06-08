@@ -63,7 +63,7 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ## Contact
 
-For any inquiries, contact `jxksdev` on Discord.
+For any inquiries, contact `jxks` on Discord.
 
 ## Acknowledgements
 

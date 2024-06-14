@@ -55,7 +55,10 @@ python3 jxks0s1nt.py
   - `1`: Perform an extensive scan of the IP address.
   - `2`: Scan the first 10,000 ports of the IP address.
   - `3`: Check if the IP address is associated with a VPN or proxy.
-  - `4`: Exit the program.
+  - `4`: Check the Response Time of the IP adress.
+  - `5`: Generate a Google Maps Link of the Approximated Area of the IP adress.
+  - `6`: Change the Current IP adress.
+  - `7`: Exit jxks0s1nt
   
 ## License
 

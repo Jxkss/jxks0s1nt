@@ -1,0 +1,143 @@
+[
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "random",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
+        "documentation": {}
+    },
+    {
+        "label": "asyncio",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "asyncio",
+        "description": "asyncio",
+        "detail": "asyncio",
+        "documentation": {}
+    },
+    {
+        "label": "aiohttp",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "aiohttp",
+        "description": "aiohttp",
+        "detail": "aiohttp",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "webbrowser",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "webbrowser",
+        "description": "webbrowser",
+        "detail": "webbrowser",
+        "documentation": {}
+    },
+    {
+        "label": "Colors",
+        "importPath": "pystyle",
+        "description": "pystyle",
+        "isExtraImport": true,
+        "detail": "pystyle",
+        "documentation": {}
+    },
+    {
+        "label": "Colorate",
+        "importPath": "pystyle",
+        "description": "pystyle",
+        "isExtraImport": true,
+        "detail": "pystyle",
+        "documentation": {}
+    },
+    {
+        "label": "ping",
+        "importPath": "pythonping",
+        "description": "pythonping",
+        "isExtraImport": true,
+        "detail": "pythonping",
+        "documentation": {}
+    },
+    {
+        "label": "Requests",
+        "kind": 6,
+        "importPath": "jxks0s1nt",
+        "description": "jxks0s1nt",
+        "peekOfCode": "class Requests:\n    def __init__(self, url, headers=None):\n        self.url = url\n        self.headers = headers or {}\n    async def sender(self):\n        async with aiohttp.ClientSession() as session:\n            async with session.get(self.url, headers=self.headers) as response:\n                return await response.text()\nasync def url(ip):\n    default_user_agents = [",
+        "detail": "jxks0s1nt",
+        "documentation": {}
+    },
+    {
+        "label": "IPQS",
+        "kind": 6,
+        "importPath": "jxks0s1nt",
+        "description": "jxks0s1nt",
+        "peekOfCode": "class IPQS:\n    key = \"B95ZfBY2JF1HzSmgGjGVm3v2Hg1TAVGw\"\n    @staticmethod\n    async def check_vpn_proxy(ip, headers):\n        parameters = {\n            'user_agent': headers['User-Agent'],\n            'user_language': headers['Accept-Language'].split(',')[0],\n            'strictness': 0,\n            'allow_public_access_points': 'true',\n            'lighter_penalties': 'false'",
+        "detail": "jxks0s1nt",
+        "documentation": {}
+    },
+    {
+        "label": "is_valid_ip",
+        "kind": 2,
+        "importPath": "jxks0s1nt",
+        "description": "jxks0s1nt",
+        "peekOfCode": "def is_valid_ip(ip):\n    time.sleep(0.5)\n    pattern = re.compile(r\"^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$\")\n    return pattern.match(ip) is not None\nasync def ping_test(ip):\n    try:\n        response = ping(ip, count=4, timeout=2)\n        if response.success():\n            time.sleep(0.3)\n            return f\"Ping successful! Round-trip time: {response.rtt_avg_ms:.2f} ms\"",
+        "detail": "jxks0s1nt",
+        "documentation": {}
+    }
+]

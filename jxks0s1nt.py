@@ -7,7 +7,9 @@ import random
 import asyncio
 import aiohttp
 import requests
+import webbrowser
 from pystyle import Colors, Colorate
+from pythonping import ping
 
 os.system('title jxks0s1nt - Made With Love By Jxks')
 
@@ -32,7 +34,10 @@ async def url(ip):
         with open("useragents.txt", "r") as user_file:
             user_agents = user_file.read().split('\n')
     except FileNotFoundError:
+        time.sleep(0.5)
         print(Colorate.Horizontal(Colors.red_to_yellow,"[X] useragents.txt not found. Using default user agents."))
+        time.sleep(0.5)
+        
         user_agents = default_user_agents
 
     url = f"http://ip-api.com/json/{ip}"
@@ -46,6 +51,7 @@ async def url(ip):
         return None
 
 async def lookup(ip):
+    time.sleep(0.3)
     read = await url(ip)
     if read and read.get('status') == 'success':
         output = (Colorate.Horizontal(Colors.cyan_to_green,f"""
@@ -71,10 +77,10 @@ async def lookup(ip):
     [-] Organization: {read.get('org', 'N/A')}
     [-] AS: {read.get('as', 'N/A')}
 
-[⛴] Google Maps Link: https://www.google.com/maps/place/{read.get('lat', 'N/A')},{read.get('lon', 'N/A')}
 """))
         return output, read.get('city', 'N/A')
     else:
+        time.sleep(0.5)
         return Colorate.Horizontal(Colors.red_to_yellow,"[X] Error retrieving data!"), None
 
 async def scan_port(ip, port):
@@ -92,7 +98,7 @@ async def port_scan(ip):
     tasks = []
     for port in range(1, 10000):
         tasks.append(scan_port(ip, port))
-
+     
     results = await asyncio.gather(*tasks)
 
     for result in results:
@@ -101,8 +107,6 @@ async def port_scan(ip):
 
     print(" ")
     print(Colorate.Horizontal(Colors.cyan_to_green, f"[-] Open ports: {', '.join(map(str, open_ports)) if open_ports else Colorate.Horizontal(Colors.cyan_to_green,'No open ports found')}"))
-
-
 
 class IPQS:
     key = "B95ZfBY2JF1HzSmgGjGVm3v2Hg1TAVGw"
@@ -139,6 +143,40 @@ class IPQS:
         response = requests.get(url, params=vars)
         return json.loads(response.text)
 
+
+async def change_ip():
+    print(" ")
+    new_ip = input(Colorate.Horizontal(Colors.cyan_to_green, "[?] Enter new IP address: "))
+    if is_valid_ip(new_ip):
+        return new_ip
+    else:
+        time.sleep(0.5)
+        print(" ")
+        print(Colorate.Horizontal(Colors.red_to_yellow, "[X] Invalid IP address format."))
+        time.sleep(0.5)
+        return None
+
+def is_valid_ip(ip):
+    time.sleep(0.5)
+    pattern = re.compile(r"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$")
+    return pattern.match(ip) is not None
+
+async def ping_test(ip):
+    try:
+        response = ping(ip, count=4, timeout=2)
+        if response.success():
+            time.sleep(0.3)
+            return f"Ping successful! Round-trip time: {response.rtt_avg_ms:.2f} ms"
+        else:
+            time.sleep(0.5)
+            return Colorate.Horizontal(Colors.red_to_yellow, "[X] Ping failed. No response.")
+            time.sleep(0.5)
+    except Exception as e:
+        time.sleep(0.5)
+        print(Colorate.Horizontal(Colors.red_to_yellow, f"[X] An error occurred during ping test: {e}"))
+        time.sleep(0.5)
+        return None
+
 async def get_random_user_agent():
     try:
         with open("useragents.txt", "r") as user_file:
@@ -154,55 +192,80 @@ async def get_random_user_agent():
 
     return random.choice(user_agents)
 
-def is_valid_ip(ip):
-    pattern = re.compile(
-        r"^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])$")
-    return bool(pattern.match(ip))
+async def generate_map(ip):
+    read = await url(ip)
+    if read and read.get('status') == 'success':
+        print(Colorate.Horizontal(Colors.cyan_to_green,f"""
+[✈] Coordinates:
+    [-] Latitude: {read.get('lat', 'N/A')}
+    [-] Longitude: {read.get('lon', 'N/A')}   
+ 
+        """))
+
+        map_link = f"https://www.google.com/maps/place/{read.get('lat', 'N/A')},{read.get('lon', 'N/A')}"
+        custom_map_link = f"https://cache.ip-api.com/{read.get('lat', 'N/A')},{read.get('lon', 'N/A')}"
+        print(Colorate.Horizontal(Colors.cyan_to_green, f"[⛴] Google Maps Link: https://www.google.com/maps/place/{read.get('lat', 'N/A')},{read.get('lon', 'N/A')}"))
+        print(" ")
+        print(Colorate.Horizontal(Colors.cyan_to_green, "[!] Opening Link..."))
+        time.sleep(3)
+        webbrowser.open(map_link, new=0, autoraise=True)
+        
+    else:
+        time.sleep(0.5)
+        print(" ")
+        print(Colorate.Horizontal(Colors.red_to_yellow, "[X] Error retrieving data!"))
+        time.sleep(0.5)
 
 async def main():
-    while True:
+    ip = None
+    while not ip:
         print(Colorate.Horizontal(Colors.cyan_to_green,
-        rf'''
-     __        __           _______          ____        __
-    |__|__  __|  | __  _____\   _  \   _____/_   | _____/  |_
-    |  \  \/  /  |/ / /  ___/  /_\  \ /  ___/|   |/    \   __\
-    |  |>    <|    <  \___ \\  \_/   \\___ \ |   |   |  \  |
-/\__|  /__/\_ \__|_ \/____  >\_____  /____  >|___|___|  /__|
-\______|     \/    \/     \/       \/     \/          \/     #Jxksdev | DONT SKID
-
+            rf'''
+      __        __           _______          ____        __
+     |__|__  __|  | __  _____\   _  \   _____/_   | _____/  |_
+     |  \  \/  /  |/ / /  ___/  /_\  \ /  ___/|   |/    \   __\
+     |  |>    <|    <  \___ \\  \_/   \\___ \ |   |   |  \  |
+ /\__|  /__/\_ \__|_ \/____  >\_____  /____  >|___|___|  /__|
+ \______|     \/    \/     \/       \/     \/          \/     #Jxksdev
+ 
      '''))
-        ip = input(Colorate.Horizontal(Colors.cyan_to_green,"[?] IP address: "))
-        if not is_valid_ip(ip):
-            print(Colorate.Horizontal(Colors.red_to_yellow, "[X] Invalid IP address format. Please try again."))
+        ip_input = input(Colorate.Horizontal(Colors.cyan_to_green, "[?] Enter an IP address: "))
+        if is_valid_ip(ip_input):
+            ip = ip_input
+        else:
+            time.sleep(0.2)
+            print(" ")
+            print(Colorate.Horizontal(Colors.red_to_yellow, "[X] Invalid IP address format. Please enter a valid IP address."))
             time.sleep(1)
             os.system('cls' if os.name == 'nt' else 'clear')
-            continue
-        break
 
     while True:
         os.system('cls' if os.name == 'nt' else 'clear')
         print(Colorate.Horizontal(Colors.cyan_to_green,
             rf'''
-     __        __           _______          ____        __
-    |__|__  __|  | __  _____\   _  \   _____/_   | _____/  |_
-    |  \  \/  /  |/ / /  ___/  /_\  \ /  ___/|   |/    \   __\
-    |  |>    <|    <  \___ \\  \_/   \\___ \ |   |   |  \  |
-/\__|  /__/\_ \__|_ \/____  >\_____  /____  >|___|___|  /__|
-\______|     \/    \/     \/       \/     \/          \/     #Jxksdev | DONT SKID
+      __        __           _______          ____        __
+     |__|__  __|  | __  _____\   _  \   _____/_   | _____/  |_
+     |  \  \/  /  |/ / /  ___/  /_\  \ /  ___/|   |/    \   __\
+     |  |>    <|    <  \___ \\  \_/   \\___ \ |   |   |  \  |
+ /\__|  /__/\_ \__|_ \/____  >\_____  /____  >|___|___|  /__|
+ \______|     \/    \/     \/       \/     \/          \/     #Jxksdev
      '''))
         print(Colorate.Horizontal(Colors.cyan_to_green,
             rf'''
-┌────────────────────────────┐
-│        -jxks0s1nt-         │ Github: https://github.com/Jxkss
-├────────────────────────────┤ Profile: https://jxks.dev            
-├─ 1. Extensive Scan         │ Contact: 'jxksdev' on Discord
-├─ 2. Port scan              │
-├─ 3. Check for VPN/Proxy    │ [?] = Input, [X] = Error, [!] = Status, [-] = Result
-├─ 4. Exit jxks0s1nt         │
-└┬───────────────────────────┘ 
- └─► Using {ip}
-                            '''))
-        task = input(Colorate.Horizontal(Colors.cyan_to_green,"[?] Option: "))
+        ┌────────────────────────────┐
+        │        -jxks0s1nt-         │ Github: https://github.com/Jxkss
+        ├────────────────────────────┤ Profile: https://jxks.dev            
+        ├─ 1. Extensive Scan         │ Contact: 'jxks' on Discord
+        ├─ 2. Port scan              │
+        ├─ 3. Check for VPN/Proxy    │ [?] = Input, [X] = Error, [!] = Status, [-] = Result
+        ├─ 4. Ping Test              │
+        ├─ 5. Generate Map           │
+        ├─ 6. Change IP Address      │
+        ├─ 7. Exit jxks0s1nt         │
+        └────────────────────────────┘
+        └─► Using {ip}
+            '''))
+        task = input(Colorate.Horizontal(Colors.cyan_to_green, "[?] Option: "))
         
         headers = {
             'User-Agent': await get_random_user_agent(),
@@ -214,16 +277,43 @@ async def main():
             print(output)
         elif task == '2':
             print(" ")
+            print(Colorate.Horizontal(Colors.cyan_to_green, "[!] Loading Results, It May Take a Few Seconds..."))
+            print(" ")
             await port_scan(ip)
         elif task == '3':
             await IPQS.check_vpn_proxy(ip, headers)
+        elif task == '6':
+            new_ip = await change_ip()
+            if new_ip:
+                ip = new_ip
+                time.sleep(0.5)
+                print(" ")
+                print(Colorate.Horizontal(Colors.cyan_to_green, f"[!] IP address changed to {ip}"))
+            else:
+                time.sleep(0.5)
+                print(" ")
+                print(Colorate.Horizontal(Colors.red_to_yellow, "[X] Failed to change IP address."))
+                time.sleep(0.5)
         elif task == '4':
+            print(' ')
+            result = await ping_test(ip)
+            if result:
+                print(Colorate.Horizontal(Colors.cyan_to_green, f"[-] Ping Test Results: {result}"))
+        elif task == '5':
+              await generate_map(ip)
+        elif task == '7':
             sys.exit(0)
         else:
+            time.sleep(0.5)
             print(Colorate.Horizontal(Colors.red_to_yellow, "[X] Invalid option."))
+            time.sleep(0.5)
 
         print(" ")
         input(Colorate.Horizontal(Colors.cyan_to_green, "[?] Press Enter to continue..."))
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print(Colorate.Horizontal(Colors.red_to_yellow, "\n[X] Script interrupted by user. Exiting..."))
+        time.sleep(2)

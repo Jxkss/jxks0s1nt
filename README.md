@@ -12,7 +12,7 @@ jxks0s1nt is a powerful network reconnaissance tool designed to perform extensiv
 
 ## Example
 <p align="center">
-  <img src="https://github.com/Jxkss/jxks0s1nt/blob/main/Assets/thumbnail.png" width="350" title="jxks0s1nt">
+  <img src="https://raw.githubusercontent.com/Jxkss/jxks0s1nt/main/Assets/thumbnail.png" width="350" title="jxks0s1nt">
 </p>
 
 ## Installation

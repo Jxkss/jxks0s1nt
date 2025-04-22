@@ -1,0 +1,7 @@
+aiohttp==3.8.5
+requests==2.31.0
+pystyle==2.9
+asyncio==3.4.3
+pythonping==1.1.4
+ipaddress==1.0.23
+tqdm==4.66.1

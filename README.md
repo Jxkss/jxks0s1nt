@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/Jxkss/jxks0s1nt"><img src="https://i.ibb.co/V01Hy3qN/jxks0s1ntthumb.png" alt="jxks0s1nt"></a>
+  <a href="https://github.com/Jxkss/jxks0s1nt"><img src="img/jxks0s1ntthumb.png" alt="jxks0s1nt"></a>
   <br>
 </h1>
 
@@ -27,7 +27,7 @@
 
 
 <p align="center">
-  <img src="https://i.ibb.co/whBmSZrW/examplethumb.png" alt="demo" width="650">
+  <img src="img/examplethumb.png" alt="demo" width="650">
 </p>
 
 ## Installation

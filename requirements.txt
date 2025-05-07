@@ -5,3 +5,4 @@ asyncio==3.4.3
 pythonping==1.1.4
 ipaddress==1.0.23
 tqdm==4.66.3
+base64

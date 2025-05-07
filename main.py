@@ -3,6 +3,7 @@ import os
 import sys
 import time
 import json
+import base64
 import random
 import asyncio
 import getpass
@@ -15,7 +16,7 @@ import webbrowser
 from pythonping import ping
 from pystyle import Colors, Colorate
 
-CURRENT_VERSION = '2.1.2'
+CURRENT_VERSION = '2.1.3'
 
 REPO_OWNER = "Jxkss"
 REPO_NAME = "jxks0s1nt"
@@ -304,6 +305,7 @@ async def port_scan(ip, is_online):
     for port in range(1, 10000):
         tasks.append(scan_port(ip, port, proxy))
      
+    colored_spinner(1.5, " ", Colors.cyan_to_green)
     results = await asyncio.gather(*tasks)
 
     for result in results:
@@ -314,7 +316,45 @@ async def port_scan(ip, is_online):
     print(Colorate.Horizontal(Colors.cyan_to_green, f"[-] Open ports: {', '.join(map(str, open_ports)) if open_ports else 'No open ports found.'}"))
 
 class IPQS:
-    key = "B95ZfBY2JF1HzSmgGjGVm3v2Hg1TAVGw"
+    _cached_api_key = None
+    _cache_time = 0
+    _cache_duration = 3600
+    
+    @staticmethod
+    async def _fetch_api_key():
+        # Check cache first
+        current_time = time.time()
+        if IPQS._cached_api_key and (current_time - IPQS._cache_time) < IPQS._cache_duration:
+            return IPQS._cached_api_key
+            
+        try:
+            encrypted_parts = [
+                "aHR0cHM6Ly9ldXBob25pb3VzLXNmb2dsaWF0ZWxsYS01OGU0YjUubmV0bGlmeS5hcHA=",
+                "Ly5uZXRsaWZ5L2Z1bmN0aW9ucy9nZXQtYXBpLWtleQ=="
+            ]
+
+            api_key_url = base64.b64decode(encrypted_parts[0]).decode('utf-8') + base64.b64decode(encrypted_parts[1]).decode('utf-8')
+            
+            async with aiohttp.ClientSession() as session:
+                async with session.get(api_key_url) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        encoded_key = data.get("api_key")
+                        
+                        api_key = base64.b64decode(encoded_key).decode('utf-8')
+                        
+                        IPQS._cached_api_key = api_key
+                        IPQS._cache_time = current_time
+                        
+                        return api_key
+                    else:
+                        print(Colorate.Horizontal(Colors.red_to_yellow, 
+                              f"[X] Failed to fetch API key: HTTP {response.status}"))
+                        return None
+        except Exception as e:
+            print(Colorate.Horizontal(Colors.red_to_yellow, 
+                  f"[X] Error fetching API key: {e}"))
+            return None
 
     @staticmethod
     async def check_vpn_proxy(ip, headers):
@@ -327,7 +367,19 @@ class IPQS:
             'lighter_penalties': 'false'
         }
 
-        result = IPQS.payment_transaction_fraud_prev(IPQS.key, ip, parameters)
+        api_key = await IPQS._fetch_api_key()
+        
+        if not api_key:
+            print(" ")
+            print(Colorate.Horizontal(Colors.red_to_yellow,"[X] Could not retrieve API key. Cannot check VPN/Proxy status."))
+            user_input = input(Colorate.Horizontal(Colors.cyan_to_green, 
+                              "[?] Would you like to enter your own IPQS API key? (Y/N): ")).strip().lower()
+            if user_input == 'y':
+                api_key = input(Colorate.Horizontal(Colors.cyan_to_green, "[?] Enter your IPQS API key: ")).strip()
+            else:
+                return
+
+        result = IPQS.payment_transaction_fraud_prev(api_key, ip, parameters)
 
         if 'success' in result and result['success'] == True:
             if result['proxy'] == True:
@@ -345,7 +397,13 @@ class IPQS:
 
     @staticmethod
     def payment_transaction_fraud_prev(key, ip: str, vars: dict = {}) -> dict:
-        url = f"https://www.ipqualityscore.com/api/json/ip/{key}/{ip}"
+        # Encrypted API endpoint base
+        encrypted_endpoint = "aHR0cHM6Ly93d3cuaXBxdWFsaXR5c2NvcmUuY29tL2FwaS9qc29uL2lwLw=="
+        
+        # Decrypt endpoint
+        endpoint_base = base64.b64decode(encrypted_endpoint).decode('utf-8')
+        url = f"{endpoint_base}{key}/{ip}"
+        
         response = requests.get(url, params=vars)
         return json.loads(response.text)
 

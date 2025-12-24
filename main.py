@@ -780,7 +780,7 @@ async def main():
             rf'''       /┌────────────────────────────┐\         
         ┼─ 1. IP Scan                │ Github: https://github.com/Jxkss/jxks0s1nt
         ┼─ 2. Port Scan              │ Profile: https://jxks.dev 
-        ┼─ 3. Check for VPN/Proxy    │ Contact: 'leywx' on Discord
+        ┼─ 3. Check for VPN/Proxy    │ Contact: 'jxks' on Discord
         ┼─ 4. Ping Test              │
         ┼─ 5. Generate Map           │ [?] = Input, [X] = Error, [!] = Status, [-] = Result
         ┼─ 6. Change IP Address      │ ADI: {REPO_OWNER} - {REPO_NAME} - {CURRENT_VERSION}
@@ -861,3 +861,4 @@ if __name__ == "__main__":
         print(Colorate.Horizontal(Colors.red_to_yellow, "\n[X] jxks0s1nt has been interrupted. Exiting..."))
         colored_spinner(2, " ", Colors.cyan_to_green)
         sys.exit(0)
+
